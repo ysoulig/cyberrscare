@@ -4,28 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- CHANGE THIS: Browser Tab Title -->
-  <title>Site Title — Bento Template</title>
+  <title>YOUR TITLE // 東京 — Terminal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
   <style>
     /* =========================================
        CHANGE THIS: COLOR PALETTE & THEME VARS
        ========================================= */
     :root {
-      --bg-void: #060607;          /* Outer page background */
-      --bg-panel: #0d0d0f;         /* Card background */
-      --bg-panel-alt: #121215;     /* Inner tile background */
-      --border-sharp: #26262b;     /* Default 1px border */
-      --text-main: #e2e2e5;        /* Primary white/silver text */
-      --text-muted: #8a8a93;       /* Secondary grey text */
-      --text-dim: #52525b;         /* Subtle labels & metadata */
-      --accent-main: #9e1b29;      /* Primary accent color */
-      --accent-bright: #d92638;    /* Hover / active highlight */
+      --bg-void: #060607;
+      --bg-panel: #0d0d0f;
+      --bg-panel-alt: #121215;
+      --border-sharp: #26262b;
+      --border-glow: #451a21;
+      --text-main: #e2e2e5;
+      --text-muted: #8a8a93;
+      --text-dim: #52525b;
+      --accent-crimson: #9e1b29;
+      --accent-crimson-bright: #d92638;
+      --accent-steel: #71717a;
 
       --font-serif: 'Cinzel', serif;
       --font-editorial: 'Cormorant Garamond', serif;
       --font-mono: 'JetBrains Mono', monospace;
+      --font-jp: 'Noto Serif JP', serif;
     }
 
     * {
@@ -45,14 +48,15 @@
       padding: 24px 16px;
       position: relative;
       overflow-x: hidden;
-      background-image:
+      background-image: 
         radial-gradient(circle at 50% 15%, rgba(158, 27, 41, 0.08) 0%, transparent 55%),
+        radial-gradient(circle at 80% 85%, rgba(40, 40, 48, 0.25) 0%, transparent 50%),
         linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-      background-size: 100% 100%, 32px 32px, 32px 32px;
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
     }
 
-    /* Subtle CRT Scanline Overlay (Remove this block if you want a cleaner look) */
+    /* Subtle CRT Scanlines */
     body::after {
       content: "";
       position: fixed;
@@ -60,8 +64,8 @@
       pointer-events: none;
       background: repeating-linear-gradient(
         0deg,
-        rgba(0, 0, 0, 0.16),
-        rgba(0, 0, 0, 0.16) 1px,
+        rgba(0, 0, 0, 0.18),
+        rgba(0, 0, 0, 0.18) 1px,
         transparent 1px,
         transparent 3px
       );
@@ -72,13 +76,13 @@
     .bento-frame {
       width: 100%;
       max-width: 680px;
-      background: rgba(10, 10, 12, 0.94);
+      background: rgba(10, 10, 12, 0.92);
       border: 1px solid var(--border-sharp);
       padding: 12px;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.02);
       position: relative;
     }
 
@@ -87,6 +91,7 @@
     .bento-frame::after {
       content: "+";
       position: absolute;
+      font-family: var(--font-mono);
       font-size: 10px;
       color: var(--text-dim);
       pointer-events: none;
@@ -107,26 +112,40 @@
       text-transform: uppercase;
     }
 
-    .meta-strip .highlight {
-      color: var(--accent-bright);
+    .meta-strip span.jp {
+      font-family: var(--font-jp);
+      color: var(--accent-crimson-bright);
+      letter-spacing: 0.2em;
     }
 
     /* 1. Header Banner */
     .header-banner {
       position: relative;
       border: 1px solid var(--border-sharp);
-      /* CHANGE THIS: Replace background image URL below if you want a custom banner texture */
-      background:
-        linear-gradient(90deg, rgba(8, 8, 10, 0.94) 35%, rgba(8, 8, 10, 0.7) 100%),
+      background: 
+        linear-gradient(90deg, rgba(8, 8, 10, 0.94) 35%, rgba(8, 8, 10, 0.65) 100%),
         repeating-linear-gradient(-45deg, #111114 0px, #111114 6px, #0b0b0d 6px, #0b0b0d 12px);
       padding: 26px 22px;
       overflow: hidden;
     }
 
+    /* CHANGE THIS: Subtle Watermark Text inside Header Banner */
+    .header-banner::after {
+      content: "調査兵団 // 第850壁";
+      position: absolute;
+      right: 16px;
+      bottom: 10px;
+      font-family: var(--font-jp);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.12);
+      letter-spacing: 0.25em;
+      pointer-events: none;
+    }
+
     .header-kicker {
       font-size: 10px;
       letter-spacing: 0.2em;
-      color: var(--accent-bright);
+      color: var(--accent-crimson-bright);
       text-transform: uppercase;
       margin-bottom: 6px;
       display: flex;
@@ -139,7 +158,8 @@
       display: inline-block;
       width: 6px;
       height: 6px;
-      background: var(--accent-bright);
+      background: var(--accent-crimson-bright);
+      box-shadow: 0 0 8px var(--accent-crimson-bright);
     }
 
     .header-title {
@@ -158,6 +178,7 @@
       font-size: 1.05rem;
       color: var(--text-muted);
       margin-top: 6px;
+      letter-spacing: 0.03em;
     }
 
     /* 2. Navigation Row */
@@ -178,18 +199,25 @@
       cursor: pointer;
       text-transform: uppercase;
       transition: all 0.2s ease;
+      position: relative;
     }
 
     .nav-btn:hover {
-      border-color: var(--accent-main);
+      border-color: var(--accent-crimson);
       color: var(--text-main);
       background: #140c0e;
     }
 
     .nav-btn.active {
       background: #160c0e;
-      border-color: var(--accent-bright);
+      border-color: var(--accent-crimson-bright);
       color: var(--text-main);
+      box-shadow: inset 0 0 12px rgba(217, 38, 56, 0.18);
+    }
+
+    .nav-btn.active::before {
+      content: "▸ ";
+      color: var(--accent-crimson-bright);
     }
 
     /* 3. Main Split Grid */
@@ -199,18 +227,19 @@
       gap: 10px;
     }
 
-    /* Left Portrait Box */
+    /* Left Visual Portrait Box */
     .portrait-card {
       border: 1px solid var(--border-sharp);
       background: var(--bg-panel);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      position: relative;
       overflow: hidden;
       min-height: 310px;
     }
 
-    .portrait-media {
+    .portrait-art {
       position: relative;
       flex: 1;
       display: flex;
@@ -218,33 +247,51 @@
       justify-content: center;
       background: radial-gradient(circle at center, #1b1b20 0%, #09090b 85%);
       overflow: hidden;
+      padding: 16px;
     }
 
-    .portrait-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%) contrast(1.1);
-      display: block;
+    /* Cyber Grid Overlay inside Portrait */
+    .portrait-art::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 16px 16px;
+      pointer-events: none;
     }
 
-    .portrait-placeholder {
-      text-align: center;
-      padding: 20px;
-      color: var(--text-dim);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-    }
-
-    .vertical-tag {
+    .vertical-jp {
       position: absolute;
       left: 10px;
       top: 12px;
       writing-mode: vertical-rl;
-      font-size: 11px;
-      letter-spacing: 0.3em;
-      color: rgba(226, 226, 229, 0.55);
-      pointer-events: none;
+      font-family: var(--font-jp);
+      font-size: 12px;
+      letter-spacing: 0.35em;
+      color: rgba(226, 226, 229, 0.45);
+      user-select: none;
+    }
+
+    .coord-tag {
+      position: absolute;
+      right: 8px;
+      top: 10px;
+      font-size: 9px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    .wings-emblem {
+      width: 130px;
+      height: 130px;
+      filter: drop-shadow(0 0 14px rgba(217, 38, 56, 0.2));
+      transition: transform 0.5s ease;
+    }
+
+    .portrait-card:hover .wings-emblem {
+      transform: scale(1.04);
     }
 
     .portrait-footer {
@@ -264,10 +311,11 @@
       font-size: 10px;
       color: var(--text-muted);
       margin-top: 3px;
+      letter-spacing: 0.05em;
     }
 
-    /* Right Content Box */
-    .content-card {
+    /* Right Dossier Content Box */
+    .dossier-card {
       border: 1px solid var(--border-sharp);
       background: var(--bg-panel);
       padding: 16px 18px;
@@ -305,10 +353,11 @@
       justify-content: center;
       width: 24px;
       height: 24px;
-      border: 1px solid var(--accent-main);
+      border: 1px solid var(--accent-crimson);
       background: rgba(158, 27, 41, 0.15);
       font-family: var(--font-serif);
       font-size: 11px;
+      color: var(--text-main);
     }
 
     .section-title {
@@ -325,7 +374,7 @@
       letter-spacing: 0.08em;
     }
 
-    .body-copy {
+    .bio-text {
       font-family: var(--font-editorial);
       font-size: 1.05rem;
       line-height: 1.55;
@@ -346,6 +395,7 @@
       justify-content: space-between;
       padding-bottom: 6px;
       border-bottom: 1px dashed #1f1f24;
+      color: var(--text-muted);
     }
 
     .spec-list li span:first-child {
@@ -358,7 +408,7 @@
       color: var(--text-main);
     }
 
-    /* Link / Social Tiles */
+    /* Social / Link Buttons Grid */
     .links-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -366,7 +416,7 @@
       margin-top: 8px;
     }
 
-    .link-tile {
+    .social-tile {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -381,44 +431,47 @@
       transition: all 0.2s ease;
     }
 
-    .link-tile:hover {
-      border-color: var(--accent-bright);
+    .social-tile:hover {
+      border-color: var(--accent-crimson-bright);
       background: #180d10;
+      transform: translateY(-1px);
     }
 
-    .link-tile .arrow {
-      color: var(--accent-bright);
+    .social-tile .arrow {
+      color: var(--accent-crimson-bright);
+      font-size: 12px;
     }
 
-    /* List Cards (Tab II) */
-    .list-item {
+    /* Archive Cards */
+    .archive-item {
       padding: 9px 10px;
       border: 1px solid var(--border-sharp);
       background: var(--bg-panel-alt);
       margin-bottom: 8px;
     }
 
-    .list-item h4 {
+    .archive-item h4 {
       font-family: var(--font-serif);
       font-size: 12px;
       letter-spacing: 0.1em;
+      color: var(--text-main);
       margin-bottom: 3px;
     }
 
-    .list-item p {
+    .archive-item p {
       font-size: 11px;
       color: var(--text-muted);
       line-height: 1.4;
     }
 
-    /* Message Form (Tab IV) */
-    .msg-form {
+    /* Transmit Form */
+    .transmit-box {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    .msg-input {
+    .transmit-input {
       background: #08080a;
       border: 1px solid var(--border-sharp);
       color: var(--text-main);
@@ -428,13 +481,13 @@
       outline: none;
     }
 
-    .msg-input:focus {
-      border-color: var(--accent-bright);
+    .transmit-input:focus {
+      border-color: var(--accent-crimson-bright);
     }
 
-    .msg-btn {
+    .transmit-btn {
       background: rgba(158, 27, 41, 0.22);
-      border: 1px solid var(--accent-main);
+      border: 1px solid var(--accent-crimson);
       color: var(--text-main);
       font-family: var(--font-serif);
       font-size: 11px;
@@ -442,10 +495,11 @@
       padding: 8px;
       cursor: pointer;
       text-transform: uppercase;
+      transition: 0.2s;
     }
 
-    .msg-btn:hover {
-      background: var(--accent-main);
+    .transmit-btn:hover {
+      background: var(--accent-crimson);
     }
 
     .log-feed {
@@ -479,12 +533,13 @@
     .player-top {
       display: flex;
       align-items: center;
+      justify-content: space-between;
     }
 
     .play-toggle {
       width: 32px;
       height: 32px;
-      border: 1px solid var(--accent-main);
+      border: 1px solid var(--accent-crimson);
       background: rgba(158, 27, 41, 0.15);
       color: var(--text-main);
       cursor: pointer;
@@ -492,10 +547,11 @@
       align-items: center;
       justify-content: center;
       font-size: 12px;
+      transition: 0.2s;
     }
 
     .play-toggle:hover {
-      background: var(--accent-main);
+      background: var(--accent-crimson);
     }
 
     .track-info {
@@ -522,12 +578,15 @@
       width: 100%;
       height: 3px;
       background: #1e1e24;
+      position: relative;
+      overflow: hidden;
     }
 
     .progress-fill {
-      width: 35%;
+      width: 38%;
       height: 100%;
-      background: var(--accent-bright);
+      background: var(--accent-crimson-bright);
+      transition: width 0.3s linear;
     }
 
     .quote-box {
@@ -543,7 +602,7 @@
       font-family: var(--font-serif);
       font-size: 11px;
       letter-spacing: 0.14em;
-      color: var(--accent-bright);
+      color: var(--accent-crimson-bright);
       margin-bottom: 4px;
       text-transform: uppercase;
     }
@@ -555,7 +614,7 @@
       color: var(--text-muted);
     }
 
-    /* Footer */
+    /* Footer / Terminal Watermark */
     .footer-bar {
       display: flex;
       justify-content: space-between;
@@ -566,16 +625,17 @@
       letter-spacing: 0.12em;
     }
 
-    /* Toast Alert */
+    /* Toast Notification */
     .toast {
       position: fixed;
       bottom: 20px;
       right: 20px;
       background: #12090b;
-      border: 1px solid var(--accent-bright);
+      border: 1px solid var(--accent-crimson-bright);
       color: var(--text-main);
       padding: 8px 14px;
       font-size: 11px;
+      letter-spacing: 0.08em;
       opacity: 0;
       transform: translateY(10px);
       transition: all 0.25s ease;
@@ -605,77 +665,85 @@
 <body>
 
   <main class="bento-frame">
-    <!-- CHANGE THIS: Top Status Bar Text -->
+    <!-- CHANGE THIS: Top System Strip -->
     <div class="meta-strip">
-      <span>TAG // 001</span>
-      <span class="highlight">SUBHEADER TEXT</span>
-      <span>STATUS: ACTIVE</span>
+      <span>SYS.NODE // 04-SHIBUYA</span>
+      <span class="jp">東京 // 進撃の記録</span>
+      <span>STATUS: ONLINE</span>
     </div>
 
     <!-- =========================================
          1. HEADER BANNER
          ========================================= -->
     <header class="header-banner">
-      <!-- CHANGE THIS: Small Kicker Label -->
-      <div class="header-kicker">WELCOME // SUBTITLE</div>
-      <!-- CHANGE THIS: Main Page Title -->
+      <!-- CHANGE THIS: Kicker Label -->
+      <div class="header-kicker">WELCOME // PERSONNEL FILE</div>
+      <!-- CHANGE THIS: Main Display Title -->
       <h1 class="header-title">YOUR TITLE HERE</h1>
-      <!-- CHANGE THIS: Header Quote or Tagline -->
+      <!-- CHANGE THIS: Subtitle / Tagline -->
       <p class="header-sub">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
     </header>
 
     <!-- =========================================
-         2. NAVIGATION BUTTONS (4 TABS)
+         2. 4-BUTTON NAVIGATION ROW
          ========================================= -->
     <nav class="nav-grid" aria-label="Section Navigation">
-      <!-- CHANGE THIS: Tab Button Labels -->
-      <button class="nav-btn active" data-tab="tab1">I. About</button>
-      <button class="nav-btn" data-tab="tab2">II. List</button>
-      <button class="nav-btn" data-tab="tab3">III. Links</button>
-      <button class="nav-btn" data-tab="tab4">IV. Note</button>
+      <!-- CHANGE THIS: Tab Labels -->
+      <button class="nav-btn active" data-tab="dossier">I. Dossier</button>
+      <button class="nav-btn" data-tab="archive">II. Archive</button>
+      <button class="nav-btn" data-tab="comms">III. Comms</button>
+      <button class="nav-btn" data-tab="transmit">IV. Signal</button>
     </nav>
 
     <!-- =========================================
-         3. MAIN SPLIT SECTION
+         3. MAIN SPLIT GRID
          ========================================= -->
     <section class="main-split">
-      <!-- Left Portrait Box -->
+      <!-- Left Portrait / Custom Cyber Wings Emblem Card -->
       <aside class="portrait-card">
-        <div class="portrait-media">
-          <!-- CHANGE THIS: Vertical Side Text -->
-          <span class="vertical-tag">VERTICAL TEXT</span>
+        <div class="portrait-art">
+          <!-- CHANGE THIS: Vertical Japanese Side Text -->
+          <span class="vertical-jp">自由の翼・東京電脳</span>
+          <!-- CHANGE THIS: Coordinates -->
+          <span class="coord-tag">35.6762° N<br>139.6503° E</span>
 
-          <!-- CHANGE THIS: Replace the div below with <img src="YOUR_IMAGE_URL_HERE" alt="Portrait"> -->
-          <div class="portrait-placeholder">
-            [ 235 x 260 IMAGE ]<br><br>
-            Swap this box with an &lt;img&gt; tag in the code
-          </div>
+          <!-- Custom Cybernetic Wings of Freedom SVG (Kept Intact!) -->
+          <svg class="wings-emblem" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="84" stroke="#2c2c34" stroke-width="1" stroke-dasharray="4 4"/>
+            <circle cx="100" cy="100" r="68" stroke="#9e1b29" stroke-width="0.8" stroke-opacity="0.6"/>
+            <!-- Left Wing (Steel/White) -->
+            <path d="M96 48C74 44 46 58 34 84C48 80 62 82 74 88C54 88 40 98 34 114C48 110 64 112 78 118C62 120 50 130 46 144C62 138 78 138 96 144V48Z" fill="#e2e2e5" fill-opacity="0.9"/>
+            <!-- Right Wing (Crimson/Slate Cyber) -->
+            <path d="M104 48C126 44 154 58 166 84C152 80 138 82 126 88C146 88 160 98 166 114C152 110 136 112 122 118C138 120 150 130 154 144C138 138 122 138 104 144V48Z" fill="#9e1b29" fill-opacity="0.85"/>
+            <!-- Center Cyber Crosshair -->
+            <line x1="100" y1="25" x2="100" y2="175" stroke="#52525b" stroke-width="0.75"/>
+            <line x1="25" y1="100" x2="175" y2="100" stroke="#52525b" stroke-width="0.75"/>
+          </svg>
         </div>
 
         <div class="portrait-footer">
-          <!-- CHANGE THIS: Caption Title & Sub-tags -->
-          <div class="label">UNTITLED</div>
-          <div class="tags">one / two / three</div>
+          <!-- CHANGE THIS: Card Caption & Tags -->
+          <div class="label">UNIT // 104TH</div>
+          <div class="tags">one • two • three</div>
         </div>
       </aside>
 
-      <!-- Right Tabbed Content Box -->
-      <div class="content-card">
-
-        <!-- TAB 1 CONTENT -->
-        <div class="tab-pane active" id="tab1">
+      <!-- Right Dynamic Content Dossier -->
+      <div class="dossier-card">
+        <!-- TAB I: DOSSIER -->
+        <div class="tab-pane active" id="tab-dossier">
           <div>
             <div class="section-head">
               <span class="roman-badge">I</span>
-              <!-- CHANGE THIS: Section 1 Heading -->
+              <!-- CHANGE THIS: Section I Heading -->
               <h2 class="section-title">Untitled</h2>
-              <span class="section-sub">SEC_01</span>
+              <span class="section-sub">FILE_01</span>
             </div>
-            <!-- CHANGE THIS: Main Bio / Intro Paragraph -->
-            <p class="body-copy">
+            <!-- CHANGE THIS: Main Bio Paragraph -->
+            <p class="bio-text">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suscipit semper etiam tortor, imperdiet vestibulum dictumst nostra. Mattis himenaeos eget eros quis.
             </p>
-            <!-- CHANGE THIS: Key-Value Info Rows -->
+            <!-- CHANGE THIS: Spec List Rows -->
             <ul class="spec-list">
               <li><span>Label 01</span><span>Lorem ipsum</span></li>
               <li><span>Label 02</span><span>Dolor sit amet</span></li>
@@ -687,108 +755,112 @@
           <div style="margin-top: 16px;">
             <div class="section-head" style="margin-bottom: 8px;">
               <span class="roman-badge">II</span>
-              <!-- CHANGE THIS: Quick Links Heading -->
+              <!-- CHANGE THIS: Section II Heading -->
               <h2 class="section-title">Contact</h2>
-              <span class="section-sub">LINKS</span>
+              <span class="section-sub">DIRECT</span>
             </div>
             <div class="links-grid">
-              <!-- CHANGE THIS: Replace '#' with actual URLs or use copyHandle('text') -->
-              <a class="link-tile" href="#" target="_blank"><span>LINK ONE</span><span class="arrow">↗</span></a>
-              <a class="link-tile" href="#" target="_blank"><span>LINK TWO</span><span class="arrow">↗</span></a>
-              <a class="link-tile" href="#" target="_blank"><span>LINK THREE</span><span class="arrow">↗</span></a>
-              <a class="link-tile" href="#" target="_blank"><span>LINK FOUR</span><span class="arrow">↗</span></a>
+              <!-- CHANGE THIS: Social / Link Handles -->
+              <button class="social-tile" onclick="copyHandle('@handle_one')">
+                <span>LINK ONE</span><span class="arrow">↗</span>
+              </button>
+              <button class="social-tile" onclick="copyHandle('@handle_two')">
+                <span>LINK TWO</span><span class="arrow">↗</span>
+              </button>
+              <button class="social-tile" onclick="copyHandle('@handle_three')">
+                <span>LINK THREE</span><span class="arrow">↗</span>
+              </button>
+              <button class="social-tile" onclick="copyHandle('@handle_four')">
+                <span>LINK FOUR</span><span class="arrow">↗</span>
+              </button>
             </div>
           </div>
         </div>
 
-        <!-- TAB 2 CONTENT -->
-        <div class="tab-pane" id="tab2">
+        <!-- TAB II: ARCHIVE -->
+        <div class="tab-pane" id="tab-archive">
           <div class="section-head">
             <span class="roman-badge">II</span>
-            <!-- CHANGE THIS: Tab 2 Heading -->
+            <!-- CHANGE THIS: Tab II Heading -->
             <h2 class="section-title">Archive</h2>
-            <span class="section-sub">SEC_02</span>
+            <span class="section-sub">DATA_LOG</span>
           </div>
-          <!-- CHANGE THIS: List Item 1 -->
-          <div class="list-item">
+          <!-- CHANGE THIS: Archive Cards -->
+          <div class="archive-item">
             <h4>01 // ITEM TITLE</h4>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
           </div>
-          <!-- CHANGE THIS: List Item 2 -->
-          <div class="list-item">
+          <div class="archive-item">
             <h4>02 // ITEM TITLE</h4>
             <p>Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
           </div>
-          <!-- CHANGE THIS: List Item 3 -->
-          <div class="list-item">
+          <div class="archive-item">
             <h4>03 // ITEM TITLE</h4>
             <p>Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.</p>
           </div>
         </div>
 
-        <!-- TAB 3 CONTENT -->
-        <div class="tab-pane" id="tab3">
+        <!-- TAB III: COMMS -->
+        <div class="tab-pane" id="tab-comms">
           <div class="section-head">
             <span class="roman-badge">III</span>
-            <!-- CHANGE THIS: Tab 3 Heading -->
-            <h2 class="section-title">Socials</h2>
-            <span class="section-sub">SEC_03</span>
+            <!-- CHANGE THIS: Tab III Heading -->
+            <h2 class="section-title">Encrypted Nodes</h2>
+            <span class="section-sub">NET_NODES</span>
           </div>
-          <!-- CHANGE THIS: Tab 3 Description -->
-          <p class="body-copy" style="font-size: 0.95rem;">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Click a tile below to copy a handle.
+          <p class="bio-text" style="font-size: 0.95rem;">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Click any node below to copy to clipboard.
           </p>
           <div class="links-grid">
-            <!-- CHANGE THIS: Social Handles inside copyHandle('...') and button labels -->
-            <button class="link-tile" onclick="copyHandle('@handle_one')">
-              <span>SOCIAL 01</span><span class="arrow">COPY</span>
+            <!-- CHANGE THIS: Copyable Handles -->
+            <button class="social-tile" onclick="copyHandle('@user_one')">
+              <span>NODE // 01</span><span class="arrow">COPY</span>
             </button>
-            <button class="link-tile" onclick="copyHandle('@handle_two')">
-              <span>SOCIAL 02</span><span class="arrow">COPY</span>
+            <button class="social-tile" onclick="copyHandle('@user_two')">
+              <span>NODE // 02</span><span class="arrow">COPY</span>
             </button>
-            <button class="link-tile" onclick="copyHandle('@handle_three')">
-              <span>SOCIAL 03</span><span class="arrow">COPY</span>
+            <button class="social-tile" onclick="copyHandle('@user_three')">
+              <span>NODE // 03</span><span class="arrow">COPY</span>
             </button>
-            <button class="link-tile" onclick="copyHandle('@handle_four')">
-              <span>SOCIAL 04</span><span class="arrow">COPY</span>
+            <button class="social-tile" onclick="copyHandle('@user_four')">
+              <span>NODE // 04</span><span class="arrow">COPY</span>
             </button>
           </div>
         </div>
 
-        <!-- TAB 4 CONTENT -->
-        <div class="tab-pane" id="tab4">
+        <!-- TAB IV: TRANSMIT -->
+        <div class="tab-pane" id="tab-transmit">
           <div class="section-head">
             <span class="roman-badge">IV</span>
-            <!-- CHANGE THIS: Tab 4 Heading -->
-            <h2 class="section-title">Message Box</h2>
-            <span class="section-sub">SEC_04</span>
+            <!-- CHANGE THIS: Tab IV Heading -->
+            <h2 class="section-title">Leave a Signal</h2>
+            <span class="section-sub">GUESTBOOK</span>
           </div>
-          <form class="msg-form" onsubmit="addMessage(event)">
-            <input type="text" id="senderInput" class="msg-input" placeholder="NAME..." required maxlength="20" />
-            <input type="text" id="msgInput" class="msg-input" placeholder="WRITE A NOTE..." required maxlength="90" />
-            <button type="submit" class="msg-btn">Submit // Send</button>
+          <form class="transmit-box" onsubmit="addTransmission(event)">
+            <input type="text" id="senderInput" class="transmit-input" placeholder="CODENAME..." required maxlength="20" />
+            <input type="text" id="msgInput" class="transmit-input" placeholder="ENTER TRANSMISSION MESSAGE..." required maxlength="90" />
+            <button type="submit" class="transmit-btn">Transmit Signal // 送信</button>
           </form>
           <div class="log-feed" id="logFeed">
-            <!-- CHANGE THIS: Default Starter Messages -->
-            <div>[SYS] > Lorem ipsum dolor sit amet.</div>
-            <div>[USER] > Consectetur adipiscing elit.</div>
+            <!-- CHANGE THIS: Default Log Entries -->
+            <div>[SYS] > Signal relay initialized...</div>
+            <div>[USER] > Lorem ipsum dolor sit amet.</div>
           </div>
         </div>
-
       </div>
     </section>
 
     <!-- =========================================
-         4. BOTTOM ROW (MINI PLAYER + QUOTE BOX)
+         4. BOTTOM ROW: MINI AUDIO PLAYER + QUOTE BOX
          ========================================= -->
     <section class="bottom-split">
       <div class="player-box">
         <div class="player-top">
-          <button class="play-toggle" id="playBtn" aria-label="Play or pause">▶</button>
+          <button class="play-toggle" id="playBtn" aria-label="Play or pause preview">▶</button>
           <div class="track-info">
-            <!-- CHANGE THIS: Track Title & Artist Name -->
-            <div class="track-title">TRACK TITLE HERE</div>
-            <div class="track-artist">ARTIST NAME</div>
+            <!-- CHANGE THIS: Track Title & Artist -->
+            <div class="track-title" id="trackTitle">TRACK TITLE HERE</div>
+            <div class="track-artist">ARTIST NAME // OST</div>
           </div>
         </div>
         <div class="progress-bar">
@@ -797,25 +869,25 @@
       </div>
 
       <div class="quote-box">
-        <!-- CHANGE THIS: Bottom Box Title & Text -->
-        <div class="quote-header">HEADER TEXT</div>
+        <!-- CHANGE THIS: Bottom Quote Header & Text -->
+        <div class="quote-header">DIRECTIVE // 進撃</div>
         <div class="quote-text">
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a diam maecenas sed."
         </div>
       </div>
     </section>
 
-    <!-- CHANGE THIS: Footer Credits -->
+    <!-- Watermark Footer (Kept Intact!) -->
     <footer class="footer-bar">
-      <span>TEMPLATE // BASE</span>
-      <span>I. II. III. IV.</span>
+      <span>CARRD-STYLE TERMINAL // v1.0</span>
+      <span>心臓を捧げよ</span>
     </footer>
   </main>
 
-  <div class="toast" id="toast">COPIED</div>
+  <div class="toast" id="toast">COPIED TO CLIPBOARD</div>
 
   <script>
-    // Tab Switching Logic
+    // Tab Switching
     const navBtns = document.querySelectorAll('.nav-btn');
     const tabPanes = document.querySelectorAll('.tab-pane');
 
@@ -825,12 +897,12 @@
         tabPanes.forEach(p => p.classList.remove('active'));
 
         btn.classList.add('active');
-        const target = document.getElementById(btn.dataset.tab);
+        const target = document.getElementById(`tab-${btn.dataset.tab}`);
         if (target) target.classList.add('active');
       });
     });
 
-    // Toast Alert & Copy Helper
+    // Toast Notification & Copy Handle
     const toast = document.getElementById('toast');
     let toastTimer;
 
@@ -838,48 +910,51 @@
       toast.textContent = text;
       toast.classList.add('show');
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
     }
 
-    function copyHandle(text) {
-      navigator.clipboard?.writeText(text);
-      showToast(`COPIED: ${text}`);
+    function copyHandle(handle) {
+      navigator.clipboard?.writeText(handle);
+      showToast(`COPIED: ${handle}`);
     }
 
-    // Mini Progress Bar Simulation
+    // Mini Player Simulation
     const playBtn = document.getElementById('playBtn');
     const progressFill = document.getElementById('progressFill');
     let isPlaying = false;
-    let progress = 35;
-    let timer;
+    let progress = 38;
+    let playerInterval;
 
     playBtn.addEventListener('click', () => {
       isPlaying = !isPlaying;
       playBtn.textContent = isPlaying ? '❚❚' : '▶';
       if (isPlaying) {
-        timer = setInterval(() => {
+        showToast('PLAYING PREVIEW');
+        playerInterval = setInterval(() => {
           progress = progress >= 100 ? 0 : progress + 1;
           progressFill.style.width = `${progress}%`;
         }, 400);
       } else {
-        clearInterval(timer);
+        clearInterval(playerInterval);
       }
     });
 
-    // Message Box Helper
-    function addMessage(e) {
+    // Guestbook Transmission
+    function addTransmission(e) {
       e.preventDefault();
       const sender = document.getElementById('senderInput').value.trim();
       const msg = document.getElementById('msgInput').value.trim();
       if (!sender || !msg) return;
 
       const feed = document.getElementById('logFeed');
-      const row = document.createElement('div');
-      row.textContent = `[${sender.toUpperCase()}] > ${msg}`;
-      feed.prepend(row);
+      const entry = document.createElement('div');
+      entry.textContent = `[${sender.toUpperCase()}] > ${msg}`;
+      feed.prepend(entry);
 
       document.getElementById('msgInput').value = '';
-      showToast('MESSAGE POSTED');
+      showToast('SIGNAL TRANSMITTED');
     }
   </script>
 </body>
