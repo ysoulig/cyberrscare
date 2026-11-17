@@ -1,225 +1,928 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Her Personal Archive</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FOR YOU // 東京 — Dossier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Oswald:wght@400;500;600;700&display=swap");
+    :root {
+      --bg-void: #060607;
+      --bg-panel: #0d0d0f;
+      --bg-panel-alt: #121215;
+      --border-sharp: #26262b;
+      --border-glow: #451a21;
+      --text-main: #e2e2e5;
+      --text-muted: #8a8a93;
+      --text-dim: #52525b;
+      --accent-crimson: #9e1b29;
+      --accent-crimson-bright: #d92638;
+      --accent-steel: #71717a;
+      --font-serif: 'Cinzel', serif;
+      --font-editorial: 'Cormorant Garamond', serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-jp: 'Noto Serif JP', serif;
+    }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      color: #101010;
-      background:
-        linear-gradient(rgba(255,255,255,.18) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.18) 1px, transparent 1px),
-        #252525;
-      background-size: 22px 22px;
-      font-family: "DM Mono", monospace;
+      background-color: var(--bg-void);
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      position: relative;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 50% 15%, rgba(158, 27, 41, 0.08) 0%, transparent 55%),
+        radial-gradient(circle at 80% 85%, rgba(40, 40, 48, 0.25) 0%, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
     }
 
-    .site {
-      width: min(1050px, calc(100% - 28px));
-      margin: 35px auto;
+    /* Subtle CRT Scanlines */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.18),
+        rgba(0, 0, 0, 0.18) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      z-index: 999;
     }
 
-    .window {
-      overflow: hidden;
-      margin-bottom: 18px;
-      border: 3px solid #111;
-      border-radius: 6px;
-      background: #eceae5;
-      box-shadow: 7px 7px 0 rgba(0,0,0,.5);
+    /* Main Bento Container */
+    .bento-frame {
+      width: 100%;
+      max-width: 680px;
+      background: rgba(10, 10, 12, 0.92);
+      border: 1px solid var(--border-sharp);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.02);
+      position: relative;
     }
 
-    .bar {
+    /* Corner Crosshairs */
+    .bento-frame::before,
+    .bento-frame::after {
+      content: "+";
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      pointer-events: none;
+    }
+    .bento-frame::before { top: 2px; left: 4px; }
+    .bento-frame::after { bottom: 2px; right: 4px; }
+
+    /* Top Meta Bar */
+    .meta-strip {
       display: flex;
       justify-content: space-between;
-      padding: 8px 10px;
-      color: white;
-      background: #111;
-      border-bottom: 3px solid #111;
-      font-size: .7rem;
-      letter-spacing: .08em;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 360px;
-    }
-
-    .hero-image {
-      min-height: 300px;
-      background:
-        linear-gradient(135deg, rgba(110,30,39,.3), transparent),
-        url("https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=900&q=80")
-        center/cover;
-      filter: grayscale(1) contrast(1.3);
-      border-right: 3px solid #111;
-    }
-
-    .hero-text,
-    .content {
-      padding: 28px;
-    }
-
-    .label {
-      color: #6e1e27;
-      font-size: .7rem;
-      font-weight: bold;
-      letter-spacing: .1em;
-    }
-
-    h1, h2 {
-      margin: 8px 0 15px;
-      font-family: "Oswald", sans-serif;
+      align-items: center;
+      padding: 4px 8px;
+      border-bottom: 1px solid var(--border-sharp);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
       text-transform: uppercase;
     }
 
-    h1 {
-      font-size: clamp(3rem, 8vw, 5.8rem);
-      line-height: .9;
+    .meta-strip span.jp {
+      font-family: var(--font-jp);
+      color: var(--accent-crimson-bright);
+      letter-spacing: 0.2em;
     }
 
-    h1 span {
-      color: #6e1e27;
+    /* 1. Header Banner */
+    .header-banner {
+      position: relative;
+      border: 1px solid var(--border-sharp);
+      background: 
+        linear-gradient(90deg, rgba(8, 8, 10, 0.94) 35%, rgba(8, 8, 10, 0.65) 100%),
+        repeating-linear-gradient(-45deg, #111114 0px, #111114 6px, #0b0b0d 6px, #0b0b0d 12px);
+      padding: 26px 22px;
+      overflow: hidden;
     }
 
-    h2 {
-      font-size: 2rem;
+    .header-banner::after {
+      content: "調査兵団 // 第850壁";
+      position: absolute;
+      right: 16px;
+      bottom: 10px;
+      font-family: var(--font-jp);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.12);
+      letter-spacing: 0.25em;
+      pointer-events: none;
     }
 
-    p, li {
-      font-size: .82rem;
-      line-height: 1.7;
-    }
-
-    .status,
-    .tag {
-      display: inline-block;
-      padding: 9px;
-      border: 2px solid #111;
-      background: white;
-      font-size: .68rem;
-      font-weight: bold;
-    }
-
-    .status {
-      margin-top: 12px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    ul {
-      padding-left: 18px;
-    }
-
-    .tags {
+    .header-kicker {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--accent-crimson-bright);
+      text-transform: uppercase;
+      margin-bottom: 6px;
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
       gap: 8px;
     }
 
-    .tag:nth-child(3n) {
-      color: white;
-      background: #6e1e27;
+    .header-kicker::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent-crimson-bright);
+      box-shadow: 0 0 8px var(--accent-crimson-bright);
     }
 
-    footer {
-      padding: 5px;
-      color: #eee;
-      font-size: .65rem;
+    .header-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.75rem, 4vw, 2.35rem);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--text-main);
+      text-transform: uppercase;
+      line-height: 1.1;
     }
 
-    @media (max-width: 700px) {
-      .hero, .grid {
+    .header-sub {
+      font-family: var(--font-editorial);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      letter-spacing: 0.03em;
+    }
+
+    /* 2. Navigation Row */
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .nav-btn {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-sharp);
+      color: var(--text-muted);
+      font-family: var(--font-serif);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      padding: 10px 6px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .nav-btn:hover {
+      border-color: var(--accent-crimson);
+      color: var(--text-main);
+      background: #140c0e;
+    }
+
+    .nav-btn.active {
+      background: #160c0e;
+      border-color: var(--accent-crimson-bright);
+      color: var(--text-main);
+      box-shadow: inset 0 0 12px rgba(217, 38, 56, 0.18);
+    }
+
+    .nav-btn.active::before {
+      content: "▸ ";
+      color: var(--accent-crimson-bright);
+    }
+
+    /* 3. Main Split Grid */
+    .main-split {
+      display: grid;
+      grid-template-columns: 235px 1fr;
+      gap: 10px;
+    }
+
+    /* Left Visual Portrait Box */
+    .portrait-card {
+      border: 1px solid var(--border-sharp);
+      background: var(--bg-panel);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      min-height: 310px;
+    }
+
+    .portrait-art {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, #1b1b20 0%, #09090b 85%);
+      overflow: hidden;
+      padding: 16px;
+    }
+
+    /* Cyber Grid Overlay inside Portrait */
+    .portrait-art::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 16px 16px;
+      pointer-events: none;
+    }
+
+    .vertical-jp {
+      position: absolute;
+      left: 10px;
+      top: 12px;
+      writing-mode: vertical-rl;
+      font-family: var(--font-jp);
+      font-size: 12px;
+      letter-spacing: 0.35em;
+      color: rgba(226, 226, 229, 0.45);
+      user-select: none;
+    }
+
+    .coord-tag {
+      position: absolute;
+      right: 8px;
+      top: 10px;
+      font-size: 9px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    .wings-emblem {
+      width: 130px;
+      height: 130px;
+      filter: drop-shadow(0 0 14px rgba(217, 38, 56, 0.2));
+      transition: transform 0.5s ease;
+    }
+
+    .portrait-card:hover .wings-emblem {
+      transform: scale(1.04);
+    }
+
+    .portrait-footer {
+      border-top: 1px solid var(--border-sharp);
+      padding: 10px 12px;
+      background: #09090b;
+    }
+
+    .portrait-footer .label {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: var(--text-main);
+    }
+
+    .portrait-footer .tags {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Right Dossier Content Box */
+    .dossier-card {
+      border: 1px solid var(--border-sharp);
+      background: var(--bg-panel);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(3px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-sharp);
+    }
+
+    .roman-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--accent-crimson);
+      background: rgba(158, 27, 41, 0.15);
+      font-family: var(--font-serif);
+      font-size: 11px;
+      color: var(--text-main);
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .section-sub {
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-left: auto;
+      letter-spacing: 0.08em;
+    }
+
+    .bio-text {
+      font-family: var(--font-editorial);
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: #cfcfe0;
+      margin-bottom: 14px;
+    }
+
+    .spec-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      font-size: 11px;
+    }
+
+    .spec-list li {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed #1f1f24;
+      color: var(--text-muted);
+    }
+
+    .spec-list li span:first-child {
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .spec-list li span:last-child {
+      color: var(--text-main);
+    }
+
+    /* Social / Link Buttons Grid */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .social-tile {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 11px;
+      background: var(--bg-panel-alt);
+      border: 1px solid var(--border-sharp);
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .social-tile:hover {
+      border-color: var(--accent-crimson-bright);
+      background: #180d10;
+      transform: translateY(-1px);
+    }
+
+    .social-tile .arrow {
+      color: var(--accent-crimson-bright);
+      font-size: 12px;
+    }
+
+    /* Archive Cards */
+    .archive-item {
+      padding: 9px 10px;
+      border: 1px solid var(--border-sharp);
+      background: var(--bg-panel-alt);
+      margin-bottom: 8px;
+    }
+
+    .archive-item h4 {
+      font-family: var(--font-serif);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--text-main);
+      margin-bottom: 3px;
+    }
+
+    .archive-item p {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Transmit Form */
+    .transmit-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .transmit-input {
+      background: #08080a;
+      border: 1px solid var(--border-sharp);
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 8px 10px;
+      outline: none;
+    }
+
+    .transmit-input:focus {
+      border-color: var(--accent-crimson-bright);
+    }
+
+    .transmit-btn {
+      background: rgba(158, 27, 41, 0.22);
+      border: 1px solid var(--accent-crimson);
+      color: var(--text-main);
+      font-family: var(--font-serif);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      padding: 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: 0.2s;
+    }
+
+    .transmit-btn:hover {
+      background: var(--accent-crimson);
+    }
+
+    .log-feed {
+      margin-top: 8px;
+      max-height: 85px;
+      overflow-y: auto;
+      font-size: 10px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* 4. Bottom Row */
+    .bottom-split {
+      display: grid;
+      grid-template-columns: 235px 1fr;
+      gap: 10px;
+    }
+
+    .player-box {
+      border: 1px solid var(--border-sharp);
+      background: var(--bg-panel);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .player-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .play-toggle {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--accent-crimson);
+      background: rgba(158, 27, 41, 0.15);
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: 0.2s;
+    }
+
+    .play-toggle:hover {
+      background: var(--accent-crimson);
+    }
+
+    .track-info {
+      flex: 1;
+      margin-left: 10px;
+      overflow: hidden;
+    }
+
+    .track-title {
+      font-family: var(--font-serif);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .track-artist {
+      font-size: 9px;
+      color: var(--text-muted);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 3px;
+      background: #1e1e24;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 38%;
+      height: 100%;
+      background: var(--accent-crimson-bright);
+      transition: width 0.3s linear;
+    }
+
+    .quote-box {
+      border: 1px solid var(--border-sharp);
+      background: var(--bg-panel);
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .quote-header {
+      font-family: var(--font-serif);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--accent-crimson-bright);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .quote-text {
+      font-family: var(--font-editorial);
+      font-style: italic;
+      font-size: 0.98rem;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    .footer-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 6px 0;
+      font-size: 9px;
+      color: var(--text-dim);
+      letter-spacing: 0.12em;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #12090b;
+      border: 1px solid var(--accent-crimson-bright);
+      color: var(--text-main);
+      padding: 8px 14px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 620px) {
+      .main-split,
+      .bottom-split {
         grid-template-columns: 1fr;
       }
-
-      .hero-image {
-        border-right: 0;
-        border-bottom: 3px solid #111;
+      .nav-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .portrait-card {
+        min-height: 240px;
       }
     }
   </style>
 </head>
-
 <body>
-  <main class="site">
 
-    <section class="window">
-      <div class="bar">
-        <span>HER_PERSONAL_ARCHIVE.exe</span>
-        <span>— □ ×</span>
-      </div>
+  <main class="bento-frame">
+    <!-- Top System Strip -->
+    <div class="meta-strip">
+      <span>SYS.NODE // 04-SHIBUYA</span>
+      <span class="jp">東京 // 進撃の記録</span>
+      <span>STATUS: ONLINE</span>
+    </div>
 
-      <div class="hero">
-        <div class="hero-image"></div>
+    <!-- 1. Header Banner -->
+    <header class="header-banner">
+      <div class="header-kicker">FOR YOU // PERSONNEL FILE</div>
+      <h1 class="header-title">[HER NAME HERE]</h1>
+      <p class="header-sub">"If you win, you live. If you lose, you die. If you don't fight, you can't win."</p>
+    </header>
 
-        <div class="hero-text">
-          <p class="label">PERSONAL ARCHIVE / 001</p>
-          <h1>WELCOME TO<br><span>HER SPACE.</span></h1>
-          <p>A small corner of the internet for favorite things, thoughts, interests, and random memories.</p>
-          <span class="status">● STATUS: ONLINE</span>
+    <!-- 2. 4-Button Navigation Row -->
+    <nav class="nav-grid" aria-label="Section Navigation">
+      <button class="nav-btn active" data-tab="dossier">I. Dossier</button>
+      <button class="nav-btn" data-tab="archive">II. Archive</button>
+      <button class="nav-btn" data-tab="comms">III. Comms</button>
+      <button class="nav-btn" data-tab="transmit">IV. Signal</button>
+    </nav>
+
+    <!-- 3. Main Split Grid -->
+    <section class="main-split">
+      <!-- Left Portrait / Cyber Emblem Card -->
+      <aside class="portrait-card">
+        <div class="portrait-art">
+          <span class="vertical-jp">自由の翼・東京電脳</span>
+          <span class="coord-tag">35.6762° N<br>139.6503° E</span>
+
+          <!-- Custom Cybernetic Wings of Freedom SVG -->
+          <svg class="wings-emblem" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="84" stroke="#2c2c34" stroke-width="1" stroke-dasharray="4 4"/>
+            <circle cx="100" cy="100" r="68" stroke="#9e1b29" stroke-width="0.8" stroke-opacity="0.6"/>
+            <!-- Left Wing (Steel/White) -->
+            <path d="M96 48C74 44 46 58 34 84C48 80 62 82 74 88C54 88 40 98 34 114C48 110 64 112 78 118C62 120 50 130 46 144C62 138 78 138 96 144V48Z" fill="#e2e2e5" fill-opacity="0.9"/>
+            <!-- Right Wing (Crimson/Slate Cyber) -->
+            <path d="M104 48C126 44 154 58 166 84C152 80 138 82 126 88C146 88 160 98 166 114C152 110 136 112 122 118C138 120 150 130 154 144C138 138 122 138 104 144V48Z" fill="#9e1b29" fill-opacity="0.85"/>
+            <!-- Center Cyber Crosshair -->
+            <line x1="100" y1="25" x2="100" y2="175" stroke="#52525b" stroke-width="0.75"/>
+            <line x1="25" y1="100" x2="175" y2="100" stroke="#52525b" stroke-width="0.75"/>
+          </svg>
         </div>
-      </div>
-    </section>
 
-    <section class="grid">
-      <article class="window">
-        <div class="bar">
-          <span>PROFILE_DATA.txt</span>
-          <span>— □ ×</span>
+        <div class="portrait-footer">
+          <div class="label">UNIT // 104TH</div>
+          <div class="tags">she/her • tokyo • scout</div>
         </div>
+      </aside>
 
-        <div class="content">
-          <p class="label">IDENTITY FILE</p>
-          <h2>About Me</h2>
-          <p>Hi, I’m <b>Her Name</b>. This is my little place on the internet.</p>
-          <ul>
-            <li><b>Pronouns:</b> she/her</li>
-            <li><b>Favorite color:</b> dark red</li>
-            <li><b>Current mood:</b> sleepy</li>
-            <li><b>Favorite anime:</b> Attack on Titan</li>
-          </ul>
-        </div>
-      </article>
+      <!-- Right Dynamic Content Dossier -->
+      <div class="dossier-card">
+        <!-- TAB I: DOSSIER -->
+        <div class="tab-pane active" id="tab-dossier">
+          <div>
+            <div class="section-head">
+              <span class="roman-badge">I</span>
+              <h2 class="section-title">Personnel Bio</h2>
+              <span class="section-sub">FILE_01</span>
+            </div>
+            <p class="bio-text">
+              Welcome to the terminal. Replace this intro with a short blurb about her—her vibe, favorite late-night Tokyo aesthetic, or whatever she wants visitors to see first.
+            </p>
+            <ul class="spec-list">
+              <li><span>Alias</span><span>[Nickname / Handle]</span></li>
+              <li><span>Sector</span><span>Shinjuku // Wall Rose</span></li>
+              <li><span>Favorites</span><span>AoT, Dark Cyber, Night Drives</span></li>
+              <li><span>Allegiance</span><span>Survey Corps // 調査兵団</span></li>
+            </ul>
+          </div>
 
-      <article class="window">
-        <div class="bar">
-          <span>LIKES_ARCHIVE</span>
-          <span>— □ ×</span>
-        </div>
-
-        <div class="content">
-          <p class="label">FAVORITES DATABASE</p>
-          <h2>Likes + Interests</h2>
-
-          <div class="tags">
-            <span class="tag">ATTACK ON TITAN</span>
-            <span class="tag">MANGA</span>
-            <span class="tag">MUSIC</span>
-            <span class="tag">DRAWING</span>
-            <span class="tag">HORROR</span>
-            <span class="tag">RAIN</span>
-            <span class="tag">NIGHT WALKS</span>
-            <span class="tag">OLD WEB</span>
+          <div style="margin-top: 16px;">
+            <div class="section-head" style="margin-bottom: 8px;">
+              <span class="roman-badge">II</span>
+              <h2 class="section-title">Quick Links</h2>
+              <span class="section-sub">DIRECT</span>
+            </div>
+            <div class="links-grid">
+              <button class="social-tile" onclick="copyHandle('@instagram_handle')">
+                <span>INSTAGRAM</span><span class="arrow">↗</span>
+              </button>
+              <button class="social-tile" onclick="copyHandle('discord_user')">
+                <span>DISCORD</span><span class="arrow">↗</span>
+              </button>
+              <button class="social-tile" onclick="copyHandle('@tiktok_handle')">
+                <span>TIKTOK</span><span class="arrow">↗</span>
+              </button>
+              <button class="social-tile" onclick="copyHandle('spotify_profile')">
+                <span>SPOTIFY</span><span class="arrow">↗</span>
+              </button>
+            </div>
           </div>
         </div>
-      </article>
+
+        <!-- TAB II: ARCHIVE -->
+        <div class="tab-pane" id="tab-archive">
+          <div class="section-head">
+            <span class="roman-badge">II</span>
+            <h2 class="section-title">Interests & Lore</h2>
+            <span class="section-sub">DATA_LOG</span>
+          </div>
+          <div class="archive-item">
+            <h4>01 // ATTACK ON TITAN</h4>
+            <p>Favorite characters: [Levi / Mikasa / Eren / Hange]. Favorite arc: Return to Shiganshina & Marley.</p>
+          </div>
+          <div class="archive-item">
+            <h4>02 // TOKYO CYBER AESTHETIC</h4>
+            <p>Rain-slicked neon alleys, monochrome brutalism, CRT static, and late-night Shibuya frequencies.</p>
+          </div>
+          <div class="archive-item">
+            <h4>03 // CURRENT ROTATION</h4>
+            <p>Swap this out with her favorite anime, games, or aesthetic obsessions.</p>
+          </div>
+        </div>
+
+        <!-- TAB III: COMMS -->
+        <div class="tab-pane" id="tab-comms">
+          <div class="section-head">
+            <span class="roman-badge">III</span>
+            <h2 class="section-title">Encrypted Channels</h2>
+            <span class="section-sub">NET_NODES</span>
+          </div>
+          <p class="bio-text" style="font-size: 0.95rem;">
+            Click any node below to copy her handle directly to your clipboard.
+          </p>
+          <div class="links-grid">
+            <button class="social-tile" onclick="copyHandle('@her_insta')">
+              <span>IG // @her_insta</span><span class="arrow">COPY</span>
+            </button>
+            <button class="social-tile" onclick="copyHandle('her_discord')">
+              <span>DC // her_discord</span><span class="arrow">COPY</span>
+            </button>
+            <button class="social-tile" onclick="copyHandle('@her_twitter')">
+              <span>X // @her_twitter</span><span class="arrow">COPY</span>
+            </button>
+            <button class="social-tile" onclick="copyHandle('her_roblox')">
+              <span>RBX // her_roblox</span><span class="arrow">COPY</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB IV: TRANSMIT -->
+        <div class="tab-pane" id="tab-transmit">
+          <div class="section-head">
+            <span class="roman-badge">IV</span>
+            <h2 class="section-title">Leave a Signal</h2>
+            <span class="section-sub">GUESTBOOK</span>
+          </div>
+          <form class="transmit-box" onsubmit="addTransmission(event)">
+            <input type="text" id="senderInput" class="transmit-input" placeholder="CODENAME (e.g. Scout_09)" required maxlength="20" />
+            <input type="text" id="msgInput" class="transmit-input" placeholder="ENTER TRANSMISSION MESSAGE..." required maxlength="90" />
+            <button type="submit" class="transmit-btn">Transmit Signal // 送信</button>
+          </form>
+          <div class="log-feed" id="logFeed">
+            <div>[SYS] > Signal relay initialized...</div>
+            <div>[AJ] > Built this terminal for you.</div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <footer>© 2026 HER PERSONAL ARCHIVE — UNDER CONSTRUCTION</footer>
+    <!-- 4. Bottom Row: Mini Audio Player + Quote Box -->
+    <section class="bottom-split">
+      <div class="player-box">
+        <div class="player-top">
+          <button class="play-toggle" id="playBtn" aria-label="Play or pause preview">▶</button>
+          <div class="track-info">
+            <div class="track-title" id="trackTitle">ASHES ON THE FIRE</div>
+            <div class="track-artist">KOHTA YAMAMOTO // OST</div>
+          </div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+
+      <div class="quote-box">
+        <div class="quote-header">DIRECTIVE // 進撃</div>
+        <div class="quote-text">
+          "Dedicate your heart. Beyond the walls lies a dark cyber horizon."
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-bar">
+      <span>CARRD-STYLE TERMINAL // WIP v1.0</span>
+      <span>心臓を捧げよ</span>
+    </footer>
   </main>
+
+  <div class="toast" id="toast">COPIED TO CLIPBOARD</div>
+
+  <script>
+    // Tab Switching
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    navBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        navBtns.forEach(b => b.classList.remove('active'));
+        tabPanes.forEach(p => p.classList.remove('active'));
+
+        btn.classList.add('active');
+        const target = document.getElementById(`tab-${btn.dataset.tab}`);
+        if (target) target.classList.add('active');
+      });
+    });
+
+    // Toast Notification & Copy Handle
+    const toast = document.getElementById('toast');
+    let toastTimer;
+
+    function showToast(text) {
+      toast.textContent = text;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    function copyHandle(handle) {
+      navigator.clipboard?.writeText(handle);
+      showToast(`COPIED: ${handle}`);
+    }
+
+    // Mini Player Simulation
+    const playBtn = document.getElementById('playBtn');
+    const progressFill = document.getElementById('progressFill');
+    let isPlaying = false;
+    let progress = 38;
+    let playerInterval;
+
+    playBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      playBtn.textContent = isPlaying ? '❚❚' : '▶';
+      if (isPlaying) {
+        showToast('PLAYING: ASHES ON THE FIRE');
+        playerInterval = setInterval(() => {
+          progress = progress >= 100 ? 0 : progress + 1;
+          progressFill.style.width = `${progress}%`;
+        }, 400);
+      } else {
+        clearInterval(playerInterval);
+      }
+    });
+
+    // Guestbook Transmission
+    function addTransmission(e) {
+      e.preventDefault();
+      const sender = document.getElementById('senderInput').value.trim();
+      const msg = document.getElementById('msgInput').value.trim();
+      if (!sender || !msg) return;
+
+      const feed = document.getElementById('logFeed');
+      const entry = document.createElement('div');
+      entry.textContent = `[${sender.toUpperCase()}] > ${msg}`;
+      feed.prepend(entry);
+
+      document.getElementById('msgInput').value = '';
+      showToast('SIGNAL TRANSMITTED');
+    }
+  </script>
 </body>
 </html>
