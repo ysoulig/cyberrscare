@@ -1,4 +1,4 @@
-# Tokyo Cyber // Bento Template
+# Red and Black Cyber // Bento Template
 
 A dark, editorial, bento-box landing page featuring custom cyberpunk anime graphics, an interactive audio player, tab-switching navigation, and a live signal guestbook. Designed for personal portfolios, character lores, and aesthetic link hubs.
 
